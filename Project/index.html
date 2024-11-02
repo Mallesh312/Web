@@ -280,6 +280,30 @@
 
 <script>
   let currentIndex = 0;
+  function showSection(section) {
+  const homeContent = document.getElementById('home-content');
+  const dynamicContent = document.getElementById('dynamic-content');
+
+  if (section === 'home') {
+    homeContent.style.display = 'block';
+    dynamicContent.style.display = 'none';
+  } else {
+    homeContent.style.display = 'none';
+    fetchContent(section);
+  }
+}
+
+
+function fetchContent(section) {
+  let file = section + '.html'; // Adjust based on your file names
+  fetch(file)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('dynamic-content').innerHTML = data;
+      document.getElementById('dynamic-content').style.display = 'block';
+    })
+    .catch(error => console.error('Error loading content:', error));
+}
 
   function showSection(section) {
     const sections = ['home', 'features', 'about', 'contact'];
