@@ -1,0 +1,70 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        char[][] maze = {
+            {'#', '#', '#', '#', '#', '#', '#', '#'},
+            {'#', 'P', ' ', ' ', '#', '#', '#', '#'},
+            {'#', '#', '#', ' ', '#', '#', '#', '#'},
+            {'#', ' ', ' ', ' ', '#', ' ', '#', '#'},
+            {'#', ' ', '#', '#', '#', '#', '#', '#'},
+            {'#', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+            {'#', '#', ' ', '#', '#', '#', '#', '#'},
+            {'#', ' ', ' ', ' ', '#', '#', '#', '#'},
+            {'#', '#', '#', ' ', ' ', '#', ' ', '#'},
+            {'#', ' ', ' ', ' ', ' ', ' ', 'E', '#'},
+            {'#', '#', '#', '#', '#', '#', '#', '#'}
+        };
+        Scanner sc = new Scanner(System.in);
+        int player_row = 1, player_col = 1;
+        while (true) {
+            print(maze);
+            System.out.print("Enter (W/A/S/D) To Move : ");
+            char c = sc.next().toUpperCase().charAt(0);
+            int prev_col = player_col, prev_row = player_row;
+            switch (c) {
+                case 'W':
+                    if (player_row > 0 && maze[player_row - 1][player_col] != '#') {
+                        player_row--;
+                    }
+                    break;
+                case 'A':
+                    if (player_col > 0 && maze[player_row][player_col - 1] != '#') {
+                        player_col--;
+                    }
+                    break;
+                case 'S':
+                    if (player_row < maze.length - 1 && maze[player_row + 1][player_col] != '#') {
+                        player_row++;
+                    }
+                    break;
+                case 'D':
+                    if (player_col < maze[0].length - 1 && maze[player_row][player_col + 1] != '#') {
+                        player_col++;
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid Move Please Enter valid One (\"W/A/S/D\") ");
+                    continue;
+            }
+            if (maze[prev_row][prev_col] != 'E') {
+                maze[prev_row][prev_col] = ' ';
+            }
+            if (maze[player_row][player_col] == 'E') {
+                System.out.println("You Won ");
+                return;
+            }
+            maze[player_row][player_col] = 'P';
+        }
+    }
+
+    public static void print(char[][] maze) {
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[i].length; j++) {
+                System.out.print(maze[i][j] + "  ");
+            }
+            System.out.println();
+        }
+    }
+}
+
